@@ -1,0 +1,19 @@
+seed: 20260914
+experiment_id: main_20260914
+resolutions_ms: [50, 200, 1000]
+horizons_ms: [50, 200, 1000, 2000]
+histories_ms: [200, 1000, 5000]
+quantiles: [0.01, 0.025, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.975, 0.99]
+runs_per_cohort: 3
+max_train_samples: 6000
+max_validation_samples: 3000
+evaluation_cadence_ms: 200
+n_estimators: 40
+num_leaves: 15
+learning_rate: 0.07
+n_jobs: 2
+min_bin_coverage: 0.8
+gap_multiplier: 5
+bootstrap_block_s: 10
+bootstrap_replicates: 500
+transition_quantile: 0.8

@@ -1,0 +1,20 @@
+experiment_id: actual_20260926
+assessment: grouped_pilot
+measurement: highres 8 GPU sum; CPU excluded
+bin_ms: 200
+horizons_ms: [1000]
+history_ms: 5000
+threshold_w: 100 # compatibility/scenario, not grid interconnection limit
+quantiles: [0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975, 0.99]
+seed: 42
+max_train_rows_per_run: 1500
+model_source: fixed historical lightweight setting; no new search
+controller_scenario:
+  name: idealized filler only
+  ramp_limit_w_per_s: 200
+  filler_capacity_w: 500
+  filler_slew_w_per_s: 200
+  actuation_delay_s: 0.2
+  sensitivity_capacity_w: [250, 500, 1000]
+  sensitivity_delay_s: [0, 0.2, 0.6, 1.0]
+  physical_validation: false

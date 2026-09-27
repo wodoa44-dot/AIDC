@@ -1,0 +1,24 @@
+inputs:
+  highres: /home/work/AIDC/trace/dataset/High-resolution-AI-Data-Center-Training-Workloads-Dataset
+  nlr: /home/work/AIDC/trace/dataset/nlr_312/extracted
+datasets: [highres_node, nlr_training, nlr_online_rate]
+include_optional_nlr: false
+analysis:
+  gap_multiplier: 5.0
+  online_rate_bin_s: 0.1
+  min_bin_coverage: 0.8
+detector:
+  delta_event_s: [0.2, 0.5, 1.0, 2.0]
+  relative_drop_thresholds: [0.1, 0.2, 0.3]
+  absolute_drop_w: 50.0
+  baseline_window_s: 10.0
+  baseline_stability_mad_fraction: 0.08
+  low_persistence_s: 1.0
+  recovery_fraction: 0.9
+  recovery_persistence_s: 0.5
+  noise_median_window_s: 0.2
+  min_valid_coverage: 0.8
+plots:
+  max_full_points: 5000
+  max_event_zooms: 12
+

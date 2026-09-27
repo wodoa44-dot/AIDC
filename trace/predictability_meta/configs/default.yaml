@@ -1,0 +1,15 @@
+seed: 20260915
+experiment_id: main_20260915
+resolutions_ms: [200, 1000]
+horizons_ms: [200, 1000, 2000]
+histories_ms: [200, 1000, 5000]
+quantiles: [0.01, 0.025, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.975, 0.99]
+n_estimators: 24
+num_leaves: 15
+learning_rate: 0.07
+n_jobs: 2
+max_train_samples: 1800
+max_eval_samples_per_run: 1000
+min_bin_coverage: 0.8
+gap_multiplier: 5
+bootstrap_replicates: 300

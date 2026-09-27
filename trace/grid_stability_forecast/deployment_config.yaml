@@ -1,0 +1,4 @@
+status: not_selected
+reason: grouped pilot has no nested model selection or external validation
+candidate: fixed historical lightweight setting
+actuation: disabled
