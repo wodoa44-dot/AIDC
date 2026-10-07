@@ -17,3 +17,10 @@ trace/TRACE-Multimodal-TSEncoder/
 *.log
 *.pid
 *.lock
+
+# Local publishing checkouts and installed rendering dependencies
+/.publish/
+/.publish_code/
+**/.render_deps/
+**/.grid_deps/
+**/.venv-*/

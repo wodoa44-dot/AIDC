@@ -1,0 +1,19 @@
+{
+  "canonical_rows": 629374,
+  "cross_segment_history_check": "Builder provenance groups by run, continuous segment, and binned subsegment before samples; online replay resets on gaps/metadata changes. Per-lag source identity arrays were not saved, so this is code/provenance verification rather than an independent row-level lag audit.",
+  "duplicate_prediction_keys": 0,
+  "future_information_check": "Passed code/provenance audit: issue precedes target exactly by horizon; cached feature column zero equals issue-time current power; core.power_features uses trailing completed bins only.",
+  "max_cached_power_feature_current_difference_w": 0.00024396306798735168,
+  "max_deployment_compact_raw_vs_full_selected_raw_difference_w": 0.0,
+  "max_saved_vs_reconstructed_full_prediction_difference_w": 0.0,
+  "max_seed_q50_spread_w": 0.0,
+  "max_target_minus_issue_horizon_error_ms": 1.1368683772161603e-10,
+  "outer_fold_test_membership_mismatches": 0,
+  "outer_task_count": 36,
+  "paired_target_identity_mismatches": 0,
+  "passed": true,
+  "train_test_sample_index_overlap": 0,
+  "unique_assessment_run_horizon_issue_targets": 126091,
+  "units": "watts, eight-GPU node sum mean per completed 200 ms bin; CPU/facility excluded",
+  "unmatched_condition_keys": 0
+}

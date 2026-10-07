@@ -1,0 +1,12 @@
+{
+  "unit_tests_passed": 6,
+  "smoke_v2_exit_code": 0,
+  "smoke_v2_resume_exit_code": 0,
+  "matched_conditions_checked": "all smoke trace load/forecasts/timestamps/device budgets equal across fixed and tuned",
+  "constraint_tolerance": 1e-06,
+  "prior_resume_failure": "preserved in outputs/smoke; index restoration regression fixed",
+  "checkpoint_migration": "old source/config/code hashes verified, caches reused with all partition/task checks",
+  "full_pid": 3175,
+  "full_output": "outputs/full_v2",
+  "legacy_fixed_outputs": "read-only; preserved"
+}

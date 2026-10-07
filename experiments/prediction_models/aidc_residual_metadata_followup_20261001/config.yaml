@@ -1,0 +1,7 @@
+pilot: experiments/prediction_models/aidc_forecast_pilot_20261001/outputs/pilot_v1
+development_days: ['2025-09-16', '2025-09-17', '2025-09-20']
+caps: [100, 300, 600]
+history_seconds: 5
+seed: 17
+threads: 4
+reuse_pilot_fits: false

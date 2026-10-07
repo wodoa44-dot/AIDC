@@ -1,0 +1,10 @@
+resolution_ms,horizon_ms,history_gain_pct,panel
+50,50,-8.928758981060215,initial_history_gain
+50,200,-1.7299433594854423,initial_history_gain
+50,1000,45.935137620346346,initial_history_gain
+50,2000,53.822859846859444,initial_history_gain
+200,200,-0.8129944827468174,initial_history_gain
+200,1000,48.03192086182176,initial_history_gain
+200,2000,54.17556264877858,initial_history_gain
+1000,1000,43.349498491844045,initial_history_gain
+1000,2000,53.17168925990753,initial_history_gain

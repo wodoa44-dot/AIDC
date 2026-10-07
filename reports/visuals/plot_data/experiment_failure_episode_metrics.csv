@@ -1,0 +1,9 @@
+assessment,horizon_ms,series,longest_episode_s
+grouped_outer,1000,기존 모델,33.4
+grouped_outer,1000,보완 모델,4.2
+grouped_outer,2000,기존 모델,28.200000000000003
+grouped_outer,2000,보완 모델,28.400000000000002
+reused_holdout,1000,기존 모델,4.6000000000000005
+reused_holdout,1000,보완 모델,2.2
+reused_holdout,2000,기존 모델,19.400000000000002
+reused_holdout,2000,보완 모델,15.600000000000001

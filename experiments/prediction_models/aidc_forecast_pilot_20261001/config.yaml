@@ -1,0 +1,16 @@
+prepared: experiments/aidc_grid_metadata_20260929/outputs/full_20260928T180455Z/prepared.parquet
+group_manifest: experiments/aidc_control_fair_budget_20260930/nested/outputs/full_v2/group_manifest.csv
+nested_models: experiments/aidc_control_fair_budget_20260930/nested/outputs/full_v2
+legacy_src: experiments/aidc_grid_metadata_20260929/src
+development_days: ['2025-09-16', '2025-09-17', '2025-09-20']
+holdout_day: '2025-09-22'
+dt: 0.2
+horizon_bins: 5
+histories: [1, 5, 10]
+seed: 17
+train_cap: 300
+evaluation_cap: 600
+minimum_candidates: 30
+threads: 4
+clip_zero: false
+threshold_rule: training_absolute_endpoint_delta_q50_q90

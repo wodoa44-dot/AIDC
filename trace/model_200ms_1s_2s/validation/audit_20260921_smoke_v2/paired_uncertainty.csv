@@ -1,0 +1,33 @@
+assessment,horizon_ms,comparison,n_independent_runs,estimate_w,replicates,seed,resampling,ci_low_w,ci_high_w,available,unavailable_reason
+grouped_outer,1000,metadata_minus_history_crps_w,1,-27.62034272424512,2000,20260921,paired_runs,-27.62034272424512,-27.62034272424512,True,
+grouped_outer,1000,metadata_minus_history_crps_w,1,-27.62034272424512,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,1000,metadata_minus_history_mae_w,1,-63.38652788127138,2000,20260921,paired_runs,-63.38652788127138,-63.38652788127138,True,
+grouped_outer,1000,metadata_minus_history_mae_w,1,-63.38652788127138,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,1000,metadata_minus_persistence_mae_w,1,-267.34533524807705,2000,20260921,paired_runs,-267.34533524807705,-267.34533524807705,True,
+grouped_outer,1000,metadata_minus_persistence_mae_w,1,-267.34533524807705,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,1000,history_minus_persistence_mae_w,1,-203.95880736680567,2000,20260921,paired_runs,-203.95880736680567,-203.95880736680567,True,
+grouped_outer,1000,history_minus_persistence_mae_w,1,-203.95880736680567,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,2000,metadata_minus_history_crps_w,1,-18.90473396029813,2000,20260921,paired_runs,-18.90473396029813,-18.90473396029813,True,
+grouped_outer,2000,metadata_minus_history_crps_w,1,-18.90473396029813,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,2000,metadata_minus_history_mae_w,1,1.2417315128894302,2000,20260921,paired_runs,1.2417315128894302,1.2417315128894302,True,
+grouped_outer,2000,metadata_minus_history_mae_w,1,1.2417315128894302,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,2000,metadata_minus_persistence_mae_w,1,-604.0008024315308,2000,20260921,paired_runs,-604.0008024315308,-604.0008024315308,True,
+grouped_outer,2000,metadata_minus_persistence_mae_w,1,-604.0008024315308,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+grouped_outer,2000,history_minus_persistence_mae_w,1,-605.2425339444203,2000,20260921,paired_runs,-605.2425339444203,-605.2425339444203,True,
+grouped_outer,2000,history_minus_persistence_mae_w,1,-605.2425339444203,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,metadata_minus_history_crps_w,1,-10.937749855379877,2000,20260921,paired_runs,-10.937749855379877,-10.937749855379877,True,
+reused_holdout,1000,metadata_minus_history_crps_w,1,-10.937749855379877,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,metadata_minus_history_mae_w,1,-37.25435108714231,2000,20260921,paired_runs,-37.25435108714231,-37.25435108714231,True,
+reused_holdout,1000,metadata_minus_history_mae_w,1,-37.25435108714231,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,metadata_minus_persistence_mae_w,1,-26.268178158879067,2000,20260921,paired_runs,-26.268178158879067,-26.268178158879067,True,
+reused_holdout,1000,metadata_minus_persistence_mae_w,1,-26.268178158879067,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,history_minus_persistence_mae_w,1,10.986172928263244,2000,20260921,paired_runs,10.986172928263244,10.986172928263244,True,
+reused_holdout,1000,history_minus_persistence_mae_w,1,10.986172928263244,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_history_crps_w,1,-96.12010034027594,2000,20260921,paired_runs,-96.12010034027594,-96.12010034027594,True,
+reused_holdout,2000,metadata_minus_history_crps_w,1,-96.12010034027594,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_history_mae_w,1,-180.04916454204272,2000,20260921,paired_runs,-180.04916454204272,-180.04916454204272,True,
+reused_holdout,2000,metadata_minus_history_mae_w,1,-180.04916454204272,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_persistence_mae_w,1,593.6407976494177,2000,20260921,paired_runs,593.6407976494177,593.6407976494177,True,
+reused_holdout,2000,metadata_minus_persistence_mae_w,1,593.6407976494177,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,history_minus_persistence_mae_w,1,773.6899621914604,2000,20260921,paired_runs,773.6899621914604,773.6899621914604,True,
+reused_holdout,2000,history_minus_persistence_mae_w,1,773.6899621914604,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs

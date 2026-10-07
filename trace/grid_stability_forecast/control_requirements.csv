@@ -1,0 +1,7 @@
+method,role,observations,control_input,forecast_target,cost_limit,evidence_status
+Power cap / DVFS,limit rises and peaks,cap response; latency; throughput,cap; clock; release rate,upper power quantile; rising event,throughput and inference latency,design from supplied methodology; device response unmeasured
+Filler / power floor,replace falling consumption,valley depth; duration; start and stop delay,filler level; start; stop; floor,drop probability; time; missing energy,energy and interference,design from supplied methodology; response unmeasured
+GPU firmware smoothing,attenuate short ramps,device support; slew; limits,ramp rates; floor; stop delay,short term ramp and residual,hardware support and performance,design from supplied methodology; support unverified
+BESS / UPS,absorb or supply power,SoC; charge limits; efficiency,charge and discharge setpoint,energy and ramp quantiles,capacity; losses; degradation,design from supplied methodology; no device identified
+Job / request scheduling,spread separate transitions,phase; queue; SLA; synchronization,start and resume time; admission; batch,transition occurrence and timing,queue delay and training constraints,design from supplied methodology; request logs unverified
+Hierarchical controller,share fast residual and long valleys,device delays; capacities; uncertainty,combined setpoints,short residual and long event targets,conflicts and forecast error,project design; no system validation

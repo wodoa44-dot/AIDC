@@ -1,0 +1,6 @@
+metadata_group,source,original_unique_values,missing,reconstructed_input_columns,encoding,fit_only_on_training_rows,direct_saved_encoder,evidence
+gpu,input_inventory.csv / canonical manifest and filename parser,2,0,"gpu=<training values>,gpu=__UNKNOWN__",float32 one-hot columns plus train-only vocabulary and UNKNOWN column,True,False,expanded.py:X; no encoder artifact saved
+workload,input_inventory.csv / canonical manifest and filename parser,2,0,"workload=<training values>,workload=__UNKNOWN__",float32 one-hot columns plus train-only vocabulary and UNKNOWN column,True,False,expanded.py:X; no encoder artifact saved
+batch,input_inventory.csv / canonical manifest and filename parser,6,0,"batch,batch_missing",float32 numeric plus missingness indicator; train-only median imputation,True,False,expanded.py:X; no encoder artifact saved
+ai_model,input_inventory.csv / canonical manifest and filename parser,6,0,"ai_model=<training values>,ai_model=__UNKNOWN__",float32 one-hot columns plus train-only vocabulary and UNKNOWN column,True,False,expanded.py:X; no encoder artifact saved
+gpu_count,input_inventory.csv / canonical manifest and filename parser,1,0,,not passed (constant excluded),False,False,expanded.py:X; no encoder artifact saved

@@ -1,0 +1,11 @@
+model: published_single_area_frequency_only
+nominal_frequency_hz: 60.0
+base_mva_scenario: 100.0
+synchronized_copies_scenario: 1000
+simulation_dt_s: 0.02
+control_dt_s: 0.2
+inertia_m_s: 4.0
+damping_pu: 0.015
+droop_r_pu: 0.05
+governor_tg_s: 0.2
+secondary_integral_gain: 0.0

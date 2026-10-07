@@ -1,0 +1,17 @@
+assessment,horizon_ms,condition,metric,published_value,recomputed_value,difference,passed
+grouped_outer,1000,history_only,run_seed_balanced_crps_w,367.51607402145777,367.51607402145777,0.0,True
+grouped_outer,1000,history_meta,run_seed_balanced_crps_w,349.5197104651047,349.51971046510477,5.684341886080802e-14,True
+grouped_outer,2000,history_only,run_seed_balanced_crps_w,521.7505799823077,521.7505799823077,0.0,True
+grouped_outer,2000,history_meta,run_seed_balanced_crps_w,473.0625963133152,473.0625963133152,0.0,True
+reused_holdout,1000,history_meta,q50_mae_w,305.45206879201504,305.45206879201504,0.0,True
+reused_holdout,1000,history_meta,coverage_80,0.7668021256642701,0.7668021256642701,0.0,True
+reused_holdout,1000,history_meta,q50_change_vs_full_max_w,1102.1589105876492,1102.1589105876492,0.0,True
+reused_holdout,1000,history_only,q50_mae_w,336.5098125957856,336.5098125957856,0.0,True
+reused_holdout,1000,history_only,coverage_80,0.8595185995623632,0.8595185995623632,0.0,True
+reused_holdout,1000,history_only,q50_change_vs_full_max_w,1651.196096383268,1651.196096383268,0.0,True
+reused_holdout,2000,history_meta,q50_mae_w,607.6726359803176,607.6726359803176,0.0,True
+reused_holdout,2000,history_meta,coverage_80,0.6361564755032283,0.6361564755032283,0.0,True
+reused_holdout,2000,history_meta,q50_change_vs_full_max_w,1205.7265190153062,1205.7265190153062,0.0,True
+reused_holdout,2000,history_only,q50_mae_w,634.6273590545171,634.6273590545171,0.0,True
+reused_holdout,2000,history_only,coverage_80,0.6945182934548677,0.6945182934548677,0.0,True
+reused_holdout,2000,history_only,q50_change_vs_full_max_w,982.2048810278402,982.2048810278402,0.0,True

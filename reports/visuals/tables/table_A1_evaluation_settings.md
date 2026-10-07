@@ -1,0 +1,19 @@
+**Table A1_evaluation_settings. Evaluation settings (RAFT Table 6 형식의 데이터 맞춤 적용).**
+
+| Dataset      | Protocol                      |   Sampling (ms) |   Horizon (ms) | Target / unit       |   Test runs |   Test windows | Lookback (steps / ms)    | Horizon (steps / ms)   | Model / config ID        |
+|:-------------|:------------------------------|----------------:|---------------:|:--------------------|------------:|---------------:|:-------------------------|:-----------------------|:-------------------------|
+| highres_node | grouped_outer                 |             200 |           1000 | 8-GPU power sum / W |          12 |          47469 | 5/1000                   | 5/1000                 | residual__h1000_t100_l15 |
+| highres_node | grouped_outer                 |             200 |           2000 | 8-GPU power sum / W |          12 |          46829 | 25/5000                  | 10/2000                | residual__h5000_t300_l15 |
+| highres_node | reused_holdout                |             200 |           1000 | 8-GPU power sum / W |           4 |          15995 | 5/1000                   | 5/1000                 | residual__h1000_t100_l15 |
+| highres_node | reused_holdout                |             200 |           2000 | 8-GPU power sum / W |           4 |          15798 | 25/5000                  | 10/2000                | residual__h5000_t300_l15 |
+| highres_node | within-run chronological test |              50 |             50 | 8-GPU power sum / W |          12 |           7314 | 4/200, 20/1000           | 1/50                   | History / main_20260914  |
+| highres_node | within-run chronological test |              50 |            200 | 8-GPU power sum / W |          12 |           7218 | 4/200, 20/1000, 100/5000 | 4/200                  | History / main_20260914  |
+| highres_node | within-run chronological test |              50 |           1000 | 8-GPU power sum / W |          12 |           6746 | 100/5000                 | 20/1000                | History / main_20260914  |
+| highres_node | within-run chronological test |              50 |           2000 | 8-GPU power sum / W |          12 |           6180 | 100/5000                 | 40/2000                | History / main_20260914  |
+| highres_node | within-run chronological test |             200 |            200 | 8-GPU power sum / W |          12 |          10188 | 1/200, 5/1000, 25/5000   | 1/200                  | History / main_20260914  |
+| highres_node | within-run chronological test |             200 |           1000 | 8-GPU power sum / W |          12 |          10057 | 25/5000                  | 5/1000                 | History / main_20260914  |
+| highres_node | within-run chronological test |             200 |           2000 | 8-GPU power sum / W |          12 |           9897 | 25/5000                  | 10/2000                | History / main_20260914  |
+| highres_node | within-run chronological test |            1000 |           1000 | 8-GPU power sum / W |          12 |           2136 | 5/5000                   | 1/1000                 | History / main_20260914  |
+| highres_node | within-run chronological test |            1000 |           2000 | 8-GPU power sum / W |          12 |           2122 | 5/5000                   | 2/2000                 | History / main_20260914  |
+
+_Sampling은 최종 평가 bin 간격이며 원시 기록 간격과 다르다. 모든 target은 8개 GPU 전력 합(W), CPU 제외이다._

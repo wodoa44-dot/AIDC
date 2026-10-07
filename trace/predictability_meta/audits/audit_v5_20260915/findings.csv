@@ -1,0 +1,9 @@
+id,severity,status,finding,evidence,scope
+F1,critical,confirmed,Reported 20-cell count is incorrect: exact compatibility rule yields 19 cells.,"grid_manifest.csv and grid_reconciliation.csv; 50:6,100:5,200:3,500:3,1000:2",all reports
+F2,critical,confirmed,"Actual candidate and final selected fits used 12 trees, not the YAML 4-tree setting.",expanded.py candidates hard-code n_estimators:12; candidate_validation_scores.csv identifies selected candidates,"both tracks, all reported fits"
+F3,high,confirmed,"No trained model, encoder, feature matrix, or training-index artifact was saved; tree-level metadata use cannot be audited after the fact.",empty models directory and output inventory; expanded.py never joblib.dumps models,all model-use claims
+F4,high,confirmed,Grouped-outer protocol has no grouped inner validation; it uses chronological validation rows from non-test runs.,expanded.py grouped_outer tr/va construction,Track A/B grouped_outer interpretation
+F5,medium,confirmed,"Metadata delivery is reconstructed, not directly evidenced: all-META appends one-hot gpu/workload/ai_model and numeric batch columns to power features; GPU count is excluded.",expanded.py:X and condition manifest,all-META
+F6,high,confirmed,Exact equal aggregate CRPS cells are explained by exact sample-level equal quantiles where prediction_equality reports equality 1.0; they are not rounding artifacts.,prediction_equality.csv,identified cells
+F7,medium,confirmed,"Training cap is 250 pooled rows per fit, not 250 per run; no run-balanced fitting weights are applied.","expanded.py take(tr,c[max_train]) and configuration",all fits
+F8,medium,confirmed,Confirmation runs were excluded from main outer predictions; smoke code may have loaded/binned them but has no saved score evidence.,"input inventory, outer assignment, saved outer predictions, expanded.py smoke path",confirmation freshness

@@ -1,0 +1,33 @@
+{
+  "encoder": {
+    "batch_median": null,
+    "groups": [],
+    "names": [],
+    "vocab": {}
+  },
+  "metadata_features": [],
+  "power_features": [
+    "current",
+    "lag_1200ms",
+    "lag_2400ms",
+    "lag_4800ms",
+    "mean_1200ms",
+    "std_1200ms",
+    "min_1200ms",
+    "max_1200ms",
+    "slope_1200ms",
+    "mean_2400ms",
+    "std_2400ms",
+    "min_2400ms",
+    "max_2400ms",
+    "slope_2400ms",
+    "mean_5000ms",
+    "std_5000ms",
+    "min_5000ms",
+    "max_5000ms",
+    "slope_5000ms"
+  ],
+  "power_scope": "sum of eight GPUs in one node; CPU excluded",
+  "target": "P_200ms(t + 2000 ms)",
+  "units": "W"
+}

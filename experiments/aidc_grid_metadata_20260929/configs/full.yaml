@@ -1,0 +1,10 @@
+outer_folds: 5
+inner_folds: 3
+horizons_bins: [1,2,3,4,5,6,7,8,9,10]
+history_bins: 150
+quantiles: [0.01,0.025,0.05,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,0.975,0.99]
+seeds: [17,42,2026]
+candidates: 24
+max_train_per_run: 5000
+min_coverage: 0.8
+gap_factor: 5

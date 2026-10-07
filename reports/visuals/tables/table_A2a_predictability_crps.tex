@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\caption{Full predictability results — run-macro CRPS (W).}
+\label{tab:a2a_predictability_crps}
+\small
+\begin{tabular}{llllll}
+\toprule
+Protocol & Resolution (ms) & Horizon (ms) & Unconditional CRPS (W) & Current only CRPS (W) & History CRPS (W) \\
+\midrule
+within-run chronological test & 50 & 50 & 697.60 & \textbf{100.75} & \underline{110.66} \\
+within-run chronological test & 50 & 200 & 695.82 & \textbf{111.83} & \underline{115.08} \\
+within-run chronological test & 50 & 1000 & 688.16 & \underline{327.86} & \textbf{162.22} \\
+within-run chronological test & 50 & 2000 & 689.34 & \underline{399.88} & \textbf{168.99} \\
+within-run chronological test & 200 & 200 & 755.28 & \textbf{129.15} & \underline{132.82} \\
+within-run chronological test & 200 & 1000 & 751.88 & \underline{371.54} & \textbf{183.60} \\
+within-run chronological test & 200 & 2000 & 748.68 & \underline{435.81} & \textbf{195.41} \\
+within-run chronological test & 1000 & 1000 & 748.65 & \underline{337.12} & \textbf{184.55} \\
+within-run chronological test & 1000 & 2000 & 748.86 & \underline{437.73} & \textbf{203.86} \\
+within-run chronological test & Avg & Avg & 724.92 & \underline{294.63} & \textbf{161.91} \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\par\footnotesize 각 run에서 먼저 계산한 뒤 12개 run을 동일 가중 평균했다. Avg는 표에 나열된 9개 resolution–horizon cell의 평균이다. 낮을수록 좋으며 최선은 bold, 차선은 underline이다.
+\end{table*}

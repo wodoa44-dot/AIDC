@@ -1,0 +1,4 @@
+run_id,cohort,segment_key,issue_time_s,target_time_s,horizon_ms,transition_stratum,observed_power_w,old_frozen,reliability_selection,improvement_w,selection_rule
+highres_node-66fd092cfc95757c,H100__image_generation,1:2,180.20000000000002,182.20000000000002,2000,stable,985.4369,993.6522918637618,985.9594470732408,7.692844790521008,typical
+highres_node-6cf954584c02c554,B200__image_generation,2:1,886.6,888.6,2000,rising,5238.323636363636,3424.7748733648978,5054.540941884625,1629.766068519727,largest improvement
+highres_node-6cf954584c02c554,B200__image_generation,2:1,363.0,365.0,2000,falling,1562.0738000000003,2949.3053409515082,5190.81385220405,-2241.508511252542,largest worsening

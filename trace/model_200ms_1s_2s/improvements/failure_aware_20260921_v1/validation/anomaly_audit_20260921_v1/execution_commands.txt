@@ -1,0 +1,3 @@
+Source metrics: trace/model_200ms_1s_2s/validation/metrics.py
+Input: improvements/failure_aware_20260921_v1/artifacts/full/per_target_predictions_all_models.parquet
+Primary filter: seed=42, model=reliability_selection, condition=history_meta, representation=full15

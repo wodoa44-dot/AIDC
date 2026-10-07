@@ -1,0 +1,16 @@
+seed: 2026
+selected_datasets: [highres_node]
+smoke_runs: 0
+bin_seconds: 0.2
+min_time_coverage: 0.95
+max_hold_dt_factor: 2.0
+gap_dt_factor: 5.0
+history_seconds: [1, 2, 5, 10, 30]
+horizons_seconds: [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+event_relative_threshold: 0.10
+event_min_absolute_w: 100.0
+event_confirm_bins: 2
+event_end_bins: 2
+event_hysteresis_fraction: 0.5
+outer_folds: 5
+inner_folds: 3

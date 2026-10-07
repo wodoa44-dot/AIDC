@@ -1,0 +1,3 @@
+Model,Representation,Hardware,Batch,Trials,Models / request,Package (MB),Inference p95 (ms),End-to-end p50 (ms),End-to-end p95 (ms),Process max RSS (GiB),Grouped-outer MAE (W)
+Original deployment,compact 3 quantiles,x86_64 CPU; 1 model thread,1,1000,6,0.416618,0.41861275,2.7173130000000003,2.8378983000000004,0.18011093139648438,581.3524172386259
+Failure-aware deployment,full 15 quantiles,x86_64 CPU; 1 model thread,1,1000,30,4.272845,4.688743799999999,4.051258,4.8469456,7.308261871337891,495.81537640174633

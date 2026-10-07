@@ -1,0 +1,10 @@
+{
+  "elapsed_s": 5.728378534317017,
+  "error": "KeyError(\"['persistence'] not in index\")",
+  "finished_utc": "2026-09-21T07:52:14Z",
+  "output": "trace/model_200ms_1s_2s/validation/audit_20260921_smoke",
+  "pid": 3936,
+  "smoke": true,
+  "started_utc": "2026-09-21T07:52:08Z",
+  "status": "failed"
+}

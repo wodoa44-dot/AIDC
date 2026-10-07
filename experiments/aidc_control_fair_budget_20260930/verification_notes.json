@@ -1,0 +1,34 @@
+{
+  "unit_tests_passed": 5,
+  "smoke": "outputs/smoke_v2 exit 0",
+  "resume_smoke": "exit 0, 30 checksummed tasks reused",
+  "duplicate_launch": "same-config PID 2196 detected; no duplicate",
+  "training_sample_checks": [
+    {
+      "fold": 0,
+      "actual_training_sample_rows": 47024,
+      "no_test_run_in_training": true
+    },
+    {
+      "fold": 1,
+      "actual_training_sample_rows": 41035,
+      "no_test_run_in_training": true
+    },
+    {
+      "fold": 2,
+      "actual_training_sample_rows": 50625,
+      "no_test_run_in_training": true
+    },
+    {
+      "fold": 3,
+      "actual_training_sample_rows": 49254,
+      "no_test_run_in_training": true
+    },
+    {
+      "fold": 4,
+      "actual_training_sample_rows": 47590,
+      "no_test_run_in_training": true
+    }
+  ],
+  "initial_smoke_failure": "outputs/smoke preserved; numerical reserved-credit restoration fixed"
+}

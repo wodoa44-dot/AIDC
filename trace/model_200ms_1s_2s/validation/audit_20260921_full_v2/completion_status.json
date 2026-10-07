@@ -1,0 +1,13 @@
+{
+  "canonical_rows": 629374,
+  "elapsed_s": 93.0086739063263,
+  "episode_rows": 651962,
+  "finished_utc": "2026-09-21T07:56:58Z",
+  "integrity_passed": true,
+  "output": "trace/model_200ms_1s_2s/validation/audit_20260921_full_v2",
+  "pid": 4186,
+  "report": "trace/model_200ms_1s_2s/validation/audit_20260921_full_v2/report_en.md",
+  "smoke": false,
+  "started_utc": "2026-09-21T07:55:25Z",
+  "status": "completed"
+}

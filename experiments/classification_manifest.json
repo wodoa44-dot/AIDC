@@ -1,0 +1,42 @@
+{
+  "method": "relative_symlink_classification",
+  "original_experiment_directories_preserved": true,
+  "entries": [
+    {
+      "category_path": "prediction_models/aidc_grid_metadata_20260929",
+      "original_path": "aidc_grid_metadata_20260929"
+    },
+    {
+      "category_path": "prediction_models/diagnosis_endpoint_predictions",
+      "original_path": "aidc_forecast_diagnosis_20261001/outputs/full/cache"
+    },
+    {
+      "category_path": "prediction_models/diagnosis_trajectory_predictions",
+      "original_path": "aidc_forecast_diagnosis_20261001/outputs/full/trajectory_cache"
+    },
+    {
+      "category_path": "prediction_models/nested_predictor_cache",
+      "original_path": "aidc_control_fair_budget_20260930/nested/outputs/full_v2/predictor_cache"
+    },
+    {
+      "category_path": "control_models/aidc_control_fair_budget_20260930",
+      "original_path": "aidc_control_fair_budget_20260930"
+    },
+    {
+      "category_path": "control_models/aidc_forecast_diagnosis_20261001",
+      "original_path": "aidc_forecast_diagnosis_20261001"
+    },
+    {
+      "category_path": "control_models/legacy_e1/control.py",
+      "original_path": "aidc_grid_metadata_20260929/src/aidc_exp/control.py"
+    },
+    {
+      "category_path": "control_models/legacy_e1/run_feasible_control_sensitivity.py",
+      "original_path": "aidc_grid_metadata_20260929/scripts/run_feasible_control_sensitivity.py"
+    },
+    {
+      "category_path": "control_models/legacy_e1/run_frequency_exploratory.py",
+      "original_path": "aidc_grid_metadata_20260929/scripts/run_frequency_exploratory.py"
+    }
+  ]
+}

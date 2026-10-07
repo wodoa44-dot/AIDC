@@ -1,0 +1,8 @@
+evidence: E1_assumed
+capacity_fractions_of_training_P95: [0.1, 0.3]
+delays_s: [0, 0.1, 0.5]
+baseline_capacity_fraction: 0.3
+baseline_delay_s: 0
+soc_initial: 0.5
+soc_reserve: 0.2
+efficiency_each_direction: 0.95

@@ -1,0 +1,55 @@
+import tempfile
+import unittest
+from pathlib import Path
+import numpy as np
+import pandas as pd
+from nested_pipeline import make_splits,predict,restore_prediction_index,frame_hash
+from nested_report import paired_cluster
+from aidc_exp.training import encode
+
+class NestedChecks(unittest.TestCase):
+    def test_parquet_cache_index_roundtrip(self):
+        d=pd.DataFrame({'run_id':['r','r'],'group_id':['g','g'],'segment':[1,1],'bin':[7,8],'P2':[2.,3.]},index=[42,99])
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'x.parquet';d.to_parquet(path,index=False)
+            restored=restore_prediction_index(pd.read_parquet(path),d)
+            self.assertEqual(frame_hash(d),frame_hash(restored))
+            with self.assertRaises(AssertionError): restore_prediction_index(pd.read_parquet(path).iloc[::-1],d)
+
+    def test_all_partition_groups_disjoint(self):
+        d=pd.DataFrame([{'group_id':g,'run_id':f'{g}-{r}'} for g in ['d1','d2','d3','d4'] for r in range(2)])
+        folds=make_splits(d)
+        self.assertEqual(len(folds),4)
+        for s in folds:
+            self.assertFalse(set(s['train_groups']) & set(s['test_groups']))
+            seen=[]
+            for i in s['inner']:
+                self.assertFalse(set(i['train_groups']) & set(i['validation_groups']))
+                self.assertFalse((set(i['train_groups']) | set(i['validation_groups'])) & set(s['test_groups']))
+                seen+=i['validation_groups']
+            self.assertEqual(set(seen),set(s['train_groups']))
+    def test_contaminated_predictor_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(AssertionError):
+                predict({},pd.DataFrame({'group_id':['heldout']}),pd.DataFrame({'group_id':['val']}),Path(tmp),['heldout'],lambda *a,**k:None,True)
+    def test_encoding_training_only(self):
+        train=pd.DataFrame({'current_w':[1.,2.],'hardware':['H100','H100'],'workload':['A','A']})
+        val=pd.DataFrame({'current_w':[2.],'hardware':['B200'],'workload':['B']})
+        _,x=encode(train,val,'P4',1)
+        self.assertEqual(x.hardware.iloc[0],-1)
+        self.assertEqual(x.workload.iloc[0],-1)
+    def test_cluster_estimator_preserves_run_balance(self):
+        a=pd.DataFrame({'metric':[0.,10.,10.,10.]},index=['a','b','c','d']);b=a*0
+        groups=pd.Series(['g1','g2','g2','g2'],index=a.index)
+        row,logo,individual=paired_cluster(a,b,'metric',groups,np.random.default_rng(7),2000)
+        self.assertEqual(row['mean_difference'],7.5)
+        self.assertNotEqual(row['mean_difference'],5.)
+        self.assertEqual(row['n_assumed_groups'],2)
+        self.assertEqual(next(x for x in logo if x['omitted_group']=='g1')['leave_one_group_out_difference'],10.)
+    def test_one_group_no_fake_ci(self):
+        a=pd.DataFrame({'metric':[1.,2.]},index=['a','b']);b=a*0
+        row,_,_=paired_cluster(a,b,'metric',pd.Series('only',index=a.index),np.random.default_rng(1),2000)
+        self.assertTrue(np.isnan(row['ci_low']))
+        self.assertEqual(row['status'],'insufficient_groups_no_ci')
+
+if __name__=='__main__': unittest.main()

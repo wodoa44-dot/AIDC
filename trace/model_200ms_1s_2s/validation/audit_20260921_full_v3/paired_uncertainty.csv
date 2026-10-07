@@ -1,0 +1,33 @@
+assessment,horizon_ms,comparison,n_independent_runs,estimate_w,replicates,seed,resampling,ci_low_w,ci_high_w,available,unavailable_reason
+grouped_outer,1000,metadata_minus_history_crps_w,12,-17.99636355635303,2000,20260921,paired_runs,-40.82346989634631,2.7698594065144926,True,
+grouped_outer,1000,metadata_minus_history_crps_w,12,-17.99636355635303,2000,20260921,cohort_stratified_paired_runs,-36.18247190734421,1.288391969639384,True,
+grouped_outer,1000,metadata_minus_history_mae_w,12,-25.151294568138667,2000,20260921,paired_runs,-67.76543616495196,16.51952918787014,True,
+grouped_outer,1000,metadata_minus_history_mae_w,12,-25.151294568138667,2000,20260921,cohort_stratified_paired_runs,-60.29815940126814,8.328246769359632,True,
+grouped_outer,1000,metadata_minus_persistence_mae_w,12,-119.66636846993553,2000,20260921,paired_runs,-228.0518812283763,4.325002967251979,True,
+grouped_outer,1000,metadata_minus_persistence_mae_w,12,-119.66636846993553,2000,20260921,cohort_stratified_paired_runs,-219.87734474082262,-6.928404504460327,True,
+grouped_outer,1000,history_minus_persistence_mae_w,12,-94.51507390179687,2000,20260921,paired_runs,-201.18685797657062,4.501670957690707,True,
+grouped_outer,1000,history_minus_persistence_mae_w,12,-94.51507390179687,2000,20260921,cohort_stratified_paired_runs,-179.93186638452357,10.498704806574636,True,
+grouped_outer,2000,metadata_minus_history_crps_w,12,-48.687983668992366,2000,20260921,paired_runs,-82.10700964457764,-16.290939405028954,True,
+grouped_outer,2000,metadata_minus_history_crps_w,12,-48.687983668992366,2000,20260921,cohort_stratified_paired_runs,-76.60582412252866,-19.848880886954245,True,
+grouped_outer,2000,metadata_minus_history_mae_w,12,-51.462800095681246,2000,20260921,paired_runs,-128.35253391851688,28.61486672418651,True,
+grouped_outer,2000,metadata_minus_history_mae_w,12,-51.462800095681246,2000,20260921,cohort_stratified_paired_runs,-123.14190430992173,14.06778653676459,True,
+grouped_outer,2000,metadata_minus_persistence_mae_w,12,-283.94225113781226,2000,20260921,paired_runs,-564.9117857562001,-49.339054714484455,True,
+grouped_outer,2000,metadata_minus_persistence_mae_w,12,-283.94225113781226,2000,20260921,cohort_stratified_paired_runs,-493.58299426800824,-55.41343134070398,True,
+grouped_outer,2000,history_minus_persistence_mae_w,12,-232.47945104213105,2000,20260921,paired_runs,-547.0711179648171,35.52024736780239,True,
+grouped_outer,2000,history_minus_persistence_mae_w,12,-232.47945104213105,2000,20260921,cohort_stratified_paired_runs,-460.12027629315736,32.42948201662485,True,
+reused_holdout,1000,metadata_minus_history_crps_w,4,-14.533588683774589,2000,20260921,paired_runs,-31.05117096404699,4.0817554477151745,True,
+reused_holdout,1000,metadata_minus_history_crps_w,4,-14.533588683774589,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,metadata_minus_history_mae_w,4,-35.28173681592826,2000,20260921,paired_runs,-55.63080551449817,-10.687830773937186,True,
+reused_holdout,1000,metadata_minus_history_mae_w,4,-35.28173681592826,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,metadata_minus_persistence_mae_w,4,-233.62855554667723,2000,20260921,paired_runs,-488.04316223047664,20.786051137122165,True,
+reused_holdout,1000,metadata_minus_persistence_mae_w,4,-233.62855554667723,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,1000,history_minus_persistence_mae_w,4,-198.34681873074896,2000,20260921,paired_runs,-463.48485768103535,62.58484836867872,True,
+reused_holdout,1000,history_minus_persistence_mae_w,4,-198.34681873074896,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_history_crps_w,4,-24.509020412992946,2000,20260921,paired_runs,-69.89908942143336,9.537288565853672,True,
+reused_holdout,2000,metadata_minus_history_crps_w,4,-24.509020412992946,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_history_mae_w,4,-34.13765254387509,2000,20260921,paired_runs,-133.63784764700154,30.070266806434418,True,
+reused_holdout,2000,metadata_minus_history_mae_w,4,-34.13765254387509,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,metadata_minus_persistence_mae_w,4,-276.6919266223914,2000,20260921,paired_runs,-1047.0349483491211,493.6510951043384,True,
+reused_holdout,2000,metadata_minus_persistence_mae_w,4,-276.6919266223914,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs
+reused_holdout,2000,history_minus_persistence_mae_w,4,-242.5542740785163,2000,20260921,paired_runs,-1048.189571558063,563.0810234010304,True,
+reused_holdout,2000,history_minus_persistence_mae_w,4,-242.5542740785163,2000,20260921,cohort_stratified_paired_runs,,,False,at least one cohort has fewer than two independent runs

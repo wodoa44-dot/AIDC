@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "experiment_count": 7,
+  "purpose_folder_count": 5,
+  "actual_moves": 0,
+  "link_classifications": 7,
+  "verification_item": "기존 실험명·폴더 basename 변경 0건",
+  "experiment_name_and_basename_changes": 0,
+  "original_tree_entries_checked": 44520,
+  "original_tree_entry_changes": 0,
+  "code_and_config_sha256_files_checked": 201,
+  "code_and_config_sha256_changes": 0,
+  "existing_experiment_ids_preserved": true,
+  "all_existing_classification_links_valid": true,
+  "checks": [
+    {
+      "experiment_name": "aidc_grid_metadata_20260929",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_forecast_pilot_20261001",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_residual_metadata_followup_20261001",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_residual_shrinkage_diagnosis_20261001",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_past_future_state_diagnosis_20261002",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_control_fair_budget_20260930",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    },
+    {
+      "experiment_name": "aidc_forecast_diagnosis_20261001",
+      "basename_preserved": true,
+      "relative_symlink": true,
+      "same_canonical_target": true,
+      "original_real_directory_preserved": true,
+      "readme_preserved": true
+    }
+  ],
+  "limitations": "Model/result files checked by path, type, size, mtime and inode; full content rehash of large artifacts and experiment execution not performed."
+}

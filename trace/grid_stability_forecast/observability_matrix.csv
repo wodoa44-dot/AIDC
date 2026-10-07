@@ -1,0 +1,18 @@
+variable,unit,boundary,source,availability,uncertainty,use
+GPU aggregate power,W,8 GPU sum highres,highres CSV via preprocessing,available,sensor averaging and latency unknown,forecast target
+200 ms completed bin,W,8 GPU sum,forecast_v2_complete_20260916,available,upstream sensor cadence unverified,causal input and target
+GPU model,category,node,run_metadata.parquet,available,source declared,static metadata
+GPU count,count,node,run_metadata.parquet,available,constant eight in highres; effect unidentifiable,static metadata
+AI model and size,category,job,run_metadata.parquet,available,model-size semantics vary by workload,static metadata
+Batch size,count,job,run_metadata.parquet,available,batch semantics not always verified,static metadata
+Image size and ZeRO stage,category,job,filename and source_metadata_json,partly available,filename token and missing for other workload,S2 static metadata
+Sequence length,tokens,job,run_metadata.parquet,partly available,missing for diffusion,S2 static metadata
+Phase or checkpoint,category,job,no verified time series,unavailable,requires timestamp alignment,dynamic forecast
+Configured request rate,requests/s,inference run,NLR online-rate metadata.csv,available at run level,not realized time-varying arrival,static condition only
+Arrival and queue,count/s,node,NLR online-rate vllm_server.log,queue sampled about every 10 s; arrival unavailable,clock alignment and logger rolling window unverified; no per-request arrival times,exploratory lagged dynamic metadata
+PCC active power,W,grid boundary,no data,unavailable,GPU proxy omits CPU cooling UPS and distribution,grid validation
+Actuation start and stop delay,s,device,no device test,unavailable,Phase 0 controller parameter,
+Filler capacity and tracking efficiency,W and ratio,device,no device test,unavailable,Phase 0 controller parameter,
+Inference p99 latency,ms,service,no request latency logs verified,unavailable,service cost,
+Running requests and token throughput,requests; tokens/s,NLR online-rate server,vllm_server.log,about 10 s sampled,timestamp rounded to 1 s; same acquisition group; not subsecond sensing,exploratory lagged dynamic metadata
+KV cache usage,percent,NLR online-rate server,vllm_server.log,about 10 s sampled,server clock synchronization unverified,exploratory lagged dynamic metadata

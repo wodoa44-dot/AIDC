@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "n_targets": 126091,
+  "n_runs": 16,
+  "grouped_outer_runs": 12,
+  "reused_holdout_runs": 4,
+  "duplicate_prediction_keys": 0,
+  "max_horizon_identity_error_s": 1.1368683772161603e-13,
+  "max_saved_error_identity_difference_w": 0.0,
+  "missing_primary_predictions": 0,
+  "postprocessed_quantile_crossing_rows": 0,
+  "note": "Grouped-outer and reused-holdout remain separate. Predictions are frozen and no evaluated target was used for tuning in this audit."
+}

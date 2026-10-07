@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "passed": true,
+  "retrospective": true,
+  "n_targets": 126091,
+  "artifact_count": 35,
+  "report": "/home/work/AIDC/trace/model_200ms_1s_2s/improvements/failure_aware_20260921_v1/validation/anomaly_audit_20260921_v1/report_en.md"
+}

@@ -1,0 +1,2 @@
+scope,model_artifacts_found,metadata_split_count,status,evidence
+all cells/tracks/folds/seeds,0,,evidence insufficient,outputs/.../models is empty; expanded.py creates LGBMRegressor objects only in memory and never serializes them

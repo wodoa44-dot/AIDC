@@ -1,0 +1,11 @@
+smoke_runs: 3
+outer_folds: 2
+inner_folds: 2
+horizons_bins: [5]
+history_bins: 150
+quantiles: [0.1, 0.5, 0.9]
+seeds: [2026]
+candidates: 2
+max_train_per_run: 500
+min_coverage: 0.8
+gap_factor: 5

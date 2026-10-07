@@ -1,0 +1,46 @@
+{
+  "assessments": {
+    "grouped_outer": "Frozen fold-specific full-15 models on corresponding outer-test runs; compact-3 is derived from the same q10/q50/q90 estimators.",
+    "reused_holdout": "Frozen final models on four previously inspected runs; not prospective confirmation."
+  },
+  "bootstrap": {
+    "fixed_predictions": true,
+    "replicates": 2000,
+    "seed": 20260921,
+    "unit": "paired independent run"
+  },
+  "created_utc": "2026-09-21T07:55:25Z",
+  "episode_definition": "consecutive exceeded valid issuance slots times 0.2 s; gaps, missing predictions, run, segment, horizon, model, representation, assessment, and seed boundaries break episodes",
+  "error_definition": "prediction_q50 - observed_power; negative means underprediction",
+  "experiment_id": "audit_20260921T075525Z",
+  "frozen_model_audit": true,
+  "horizons_ms": [
+    1000,
+    2000
+  ],
+  "interval_score": "(upper-lower) + 2/alpha*(lower-y)*I(y<lower) + 2/alpha*(y-upper)*I(y>upper), alpha=0.2 for q10-q90",
+  "no_retraining_tuning_recalibration_or_postprocessing_change": true,
+  "primary_seed_for_non_seed_summary": 42,
+  "resolution_ms": 200,
+  "smoke": false,
+  "tie_tolerance": {
+    "absolute_metric_difference_w": 1e-09
+  },
+  "time_series_window_s": 20.0,
+  "tolerance_grid_w": [
+    50,
+    100,
+    200,
+    300,
+    500,
+    750,
+    1000
+  ],
+  "tolerance_interpretation": "diagnostic sensitivity grid, not operational or safety limits",
+  "transition_definition": {
+    "falling": "target - issue <= -100 W",
+    "rising": "target - issue >= 100 W",
+    "stable": "abs(target - issue) < 100 W"
+  },
+  "worst_5pct_definition": "weighted empirical 95th percentile of absolute error, inclusive tail; pooled and equal-run-weight versions reported separately"
+}

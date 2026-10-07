@@ -1,0 +1,2 @@
+cache_or_model_key,condition_separation,prediction_dispatch,models_saved,cache_bug_status,evidence
+none persisted,in-memory X rebuilt independently per condition,P.append(f) after immediate condition-local prediction,False,no persistent cache/model reuse detected in code; direct prediction equality separately audited,expanded.py lines X/pred/main and empty models directory

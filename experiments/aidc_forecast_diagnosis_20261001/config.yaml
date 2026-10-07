@@ -1,0 +1,105 @@
+source: /home/work/AIDC/experiments/aidc_grid_metadata_20260929/outputs/full_20260928T180455Z
+dt: 0.2
+horizon_bins: 5
+seed: 17
+budget_multipliers:
+- 0.5
+- 0.75
+- 1.0
+- 1.25
+- 1.5
+controllers:
+- C2
+- C3
+- C4
+window_s: 60
+recovery_s: 20
+capacity_train_p95_fraction: 0.3
+fast_capacity_hours: 0.02
+ess_capacity_hours: 2.0
+initial_soc: 0.5
+soc_min: 0.2
+soc_max: 0.8
+eta: 0.95
+delay_bins: 1
+reference_slew_w_s: 500.0
+forecast_weight: 0.5
+slow_alpha: 0.15
+ramp_threshold_w_s: 500.0
+bootstrap_replicates: 2000
+bootstrap_seed: 20260930
+tuning: nested_grouped_validation
+policy: inner_tuned
+fixed_policy_dir: /home/work/AIDC/experiments/aidc_control_fair_budget_20260930/outputs/full
+grouping: collection_day_assumption
+inner_folds: 3
+predictor:
+  n_estimators: 100
+  num_leaves: 15
+  learning_rate: 0.07
+  min_child_samples: 30
+  reg_lambda: 0
+  history_s: 1
+quantiles:
+- 0.01
+- 0.025
+- 0.05
+- 0.1
+- 0.2
+- 0.3
+- 0.4
+- 0.5
+- 0.6
+- 0.7
+- 0.8
+- 0.9
+- 0.95
+- 0.975
+- 0.99
+max_train_per_run: 5000
+controller_candidates:
+- reference_slew_w_s: 500
+  slow_alpha: 0.15
+- reference_slew_w_s: 250
+  slow_alpha: 0.075
+- reference_slew_w_s: 250
+  slow_alpha: 0.15
+- reference_slew_w_s: 500
+  slow_alpha: 0.075
+- reference_slew_w_s: 1000
+  slow_alpha: 0.075
+- reference_slew_w_s: 1000
+  slow_alpha: 0.15
+smoke_max_train_per_run: 200
+smoke_windows_per_inner_fold: 2
+smoke_outer_folds: 1
+nested_output: /home/work/AIDC/experiments/aidc_control_fair_budget_20260930/nested/outputs/full_v2
+nested_code: /home/work/AIDC/experiments/aidc_control_fair_budget_20260930/nested
+weights:
+- 0
+- 0.25
+- 0.5
+- 0.75
+- 1.0
+trajectory_horizons:
+- 1
+- 2
+- 3
+- 4
+- 5
+trajectory_decision: 'execute: identical endpoints can conceal different within-horizon
+  paths; predefined structural ambiguity, no test-driven tuning'
+mpc:
+  ramp_weight: 1.0
+  throughput_weight: 0.01
+  horizon_bins: 5
+  solver: scipy.optimize.linprog/highs
+  time_limit_s: 0.1
+  simultaneous_tolerance_w: 1.0e-05
+event_threshold_w_s: 500.0
+png_dpi: 300
+smoke_limits:
+  outer_folds: 1
+  validation_windows_per_partition: 1
+  test_windows_per_fold: 1
+  mpc_solve_steps_per_window: 12

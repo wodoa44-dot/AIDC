@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "method": "relative_symlink_research_purpose_classification",
+  "scope": "Seven existing experiment directories under experiments; nested outputs and caches remain within their original experiments.",
+  "existing_classification_manifest_preserved": true,
+  "experiment_names_preserved": true,
+  "experiment_directory_basenames_preserved": true,
+  "existing_experiment_ids_preserved": true,
+  "entries": [
+    {
+      "experiment_name": "aidc_grid_metadata_20260929",
+      "research_purpose": "전력 history·metadata 예측 및 독립 tuning",
+      "original_path": "experiments/aidc_grid_metadata_20260929",
+      "canonical_path": "experiments/aidc_grid_metadata_20260929",
+      "classified_path": "experiments/metadata_forecasting/aidc_grid_metadata_20260929",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_forecast_pilot_20261001",
+      "research_purpose": "절대·residual target와 history 길이의 소규모 예측 비교",
+      "original_path": "experiments/prediction_models/aidc_forecast_pilot_20261001",
+      "canonical_path": "experiments/prediction_models/aidc_forecast_pilot_20261001",
+      "classified_path": "experiments/forecast_improvement/aidc_forecast_pilot_20261001",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_residual_metadata_followup_20261001",
+      "research_purpose": "residual·metadata 및 training cap 후속 개발 비교",
+      "original_path": "experiments/prediction_models/aidc_residual_metadata_followup_20261001",
+      "canonical_path": "experiments/prediction_models/aidc_residual_metadata_followup_20261001",
+      "classified_path": "experiments/forecast_improvement/aidc_residual_metadata_followup_20261001",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_residual_shrinkage_diagnosis_20261001",
+      "research_purpose": "저장 OOF 예측의 residual shrinkage 오차 분해",
+      "original_path": "experiments/prediction_models/aidc_residual_shrinkage_diagnosis_20261001",
+      "canonical_path": "experiments/prediction_models/aidc_residual_shrinkage_diagnosis_20261001",
+      "classified_path": "experiments/forecast_diagnosis/aidc_residual_shrinkage_diagnosis_20261001",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_past_future_state_diagnosis_20261002",
+      "research_purpose": "과거·미래 상태별 저장 예측 오차와 gain 진단",
+      "original_path": "experiments/prediction_models/aidc_past_future_state_diagnosis_20261002",
+      "canonical_path": "experiments/prediction_models/aidc_past_future_state_diagnosis_20261002",
+      "classified_path": "experiments/forecast_diagnosis/aidc_past_future_state_diagnosis_20261002",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_control_fair_budget_20260930",
+      "research_purpose": "장치별 동일 예산 제어 비교와 nested 평가",
+      "original_path": "experiments/aidc_control_fair_budget_20260930",
+      "canonical_path": "experiments/aidc_control_fair_budget_20260930",
+      "classified_path": "experiments/control_evaluation/aidc_control_fair_budget_20260930",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    },
+    {
+      "experiment_name": "aidc_forecast_diagnosis_20261001",
+      "research_purpose": "예측·제어 통합 진단 및 endpoint·trajectory MPC 비교",
+      "original_path": "experiments/aidc_forecast_diagnosis_20261001",
+      "canonical_path": "experiments/aidc_forecast_diagnosis_20261001",
+      "classified_path": "experiments/forecast_control_diagnosis/aidc_forecast_diagnosis_20261001",
+      "action": "link_classification",
+      "original_location_preserved": true,
+      "reason": "Preserve absolute/relative dependencies, resolved paths and checkpoint provenance."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+**Table A4_transition_conditioned. Transition-conditioned CRPS (W) and evaluation-window counts.**
+
+| Protocol       |   Horizon (ms) | Model         |   All CRPS |   All n |   Stable CRPS |   Stable n |   Ramp-up CRPS |   Ramp-up n |   Ramp-down CRPS |   Ramp-down n |
+|:---------------|---------------:|:--------------|-----------:|--------:|--------------:|-----------:|---------------:|------------:|-----------------:|--------------:|
+| grouped_outer  |           1000 | Failure-aware |     310.18 |   47469 |        106.12 |      23578 |         390.11 |       12833 |           665.8  |         11058 |
+| grouped_outer  |           1000 | Original      |     349.52 |   47469 |        166.1  |      23578 |         424.18 |       12833 |           663.42 |         11058 |
+| grouped_outer  |           2000 | Failure-aware |     429.57 |   46829 |        187.29 |      18530 |         436.95 |       14702 |           774.63 |         13597 |
+| grouped_outer  |           2000 | Original      |     473.06 |   46829 |        304.86 |      18530 |         484.02 |       14702 |           707.21 |         13597 |
+| reused_holdout |           1000 | Failure-aware |     226.97 |   15995 |         48.18 |       9425 |         358.98 |        3120 |           564.03 |          3450 |
+| reused_holdout |           1000 | Original      |     248.9  |   15995 |         92.29 |       9425 |         362.72 |        3120 |           544.5  |          3450 |
+| reused_holdout |           2000 | Failure-aware |     323.63 |   15798 |        289.91 |       8638 |         344.94 |        3294 |           424.88 |          3866 |
+| reused_holdout |           2000 | Original      |     420.47 |   15798 |        431.23 |       8638 |         401.97 |        3294 |           467.11 |          3866 |
+
+_Ramp-up/down은 target power − issuance power가 각각 +100 W 이상/−100 W 이하인 endpoint 변화다. Stable은 그 사이이며 event detection 결과가 아니다; n은 event 수가 아니라 forecast window 수다._

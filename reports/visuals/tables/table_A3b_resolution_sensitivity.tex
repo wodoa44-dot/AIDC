@@ -1,0 +1,15 @@
+\begin{table*}[t]
+\centering
+\caption{Resolution sensitivity of the History model — run-macro CRPS (W).}
+\label{tab:a3b_resolution_sensitivity}
+\small
+\begin{tabular}{llll}
+\toprule
+Horizon (ms) & R=50 ms & R=200 ms & R=1000 ms \\
+\midrule
+1000.00 & \textbf{162.22} & \underline{183.60} & 184.55 \\
+2000.00 & \textbf{168.99} & \underline{195.41} & 203.86 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\par\footnotesize Horizon을 행에서 고정하고 sampling interval만 열에서 바꾼다. 해상도별 binning으로 target 자체가 달라질 수 있으므로 순수 feature ablation으로 해석하지 않는다.
+\end{table*}

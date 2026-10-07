@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\caption{Full predictability results — run-macro MAE (W).}
+\label{tab:a2b_predictability_mae}
+\small
+\begin{tabular}{llllll}
+\toprule
+Protocol & Resolution (ms) & Horizon (ms) & Unconditional MAE (W) & Current only MAE (W) & History MAE (W) \\
+\midrule
+within-run chronological test & 50 & 50 & 1105.37 & \textbf{107.07} & \underline{115.99} \\
+within-run chronological test & 50 & 200 & 1111.77 & \underline{151.32} & \textbf{123.80} \\
+within-run chronological test & 50 & 1000 & 1100.22 & \underline{462.58} & \textbf{198.14} \\
+within-run chronological test & 50 & 2000 & 1080.30 & \underline{585.65} & \textbf{214.99} \\
+within-run chronological test & 200 & 200 & 1203.61 & \textbf{183.96} & \underline{193.36} \\
+within-run chronological test & 200 & 1000 & 1194.18 & \underline{560.68} & \textbf{260.69} \\
+within-run chronological test & 200 & 2000 & 1184.13 & \underline{664.39} & \textbf{275.90} \\
+within-run chronological test & 1000 & 1000 & 1206.03 & \underline{507.53} & \textbf{265.26} \\
+within-run chronological test & 1000 & 2000 & 1205.64 & \underline{655.37} & \textbf{292.81} \\
+within-run chronological test & Avg & Avg & 1154.58 & \underline{430.95} & \textbf{215.66} \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\par\footnotesize 각 run에서 먼저 계산한 뒤 12개 run을 동일 가중 평균했다. Avg는 표에 나열된 9개 resolution–horizon cell의 평균이다. 낮을수록 좋으며 최선은 bold, 차선은 underline이다.
+\end{table*}

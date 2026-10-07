@@ -1,0 +1,35 @@
+{
+  "main_experiment": "/home/work/AIDC/trace/predictability_meta/outputs/expanded_main_cpu_bounded_20260915",
+  "confirmation": "/home/work/AIDC/trace/predictability_meta/outputs/confirmation_v2_20260915",
+  "config": "/home/work/AIDC/trace/predictability_meta/configs/expanded_cpu_bounded_20260915.yaml",
+  "config_sha256": "fed9f6899047ee8619e0cfe8befcafb30dac411285db617c1ed40bcb761c9323",
+  "expanded_code_sha256": "3aa09fd8395d81acbc20ae15643c0ad67be6611703a1c7c1e588f5d0b7bb83d5",
+  "confirmation_code_sha256": "702d628cf447e432fff7f68c34083be8225dc6f33fa021b6346bc0c84600a581",
+  "python": "3.10.12",
+  "lightgbm": "2.3.1",
+  "main_status": {
+    "status": "completed",
+    "started_utc": "2026-09-15T15:24:13Z",
+    "elapsed_s": 1512.6270186901093
+  },
+  "confirmation_status": {
+    "status": "completed",
+    "elapsed_s": 81.33586597442627
+  },
+  "prediction_join": {
+    "main": {
+      "rows_history_only": 364596,
+      "rows_all_meta": 364596,
+      "matched": 364596,
+      "missing_history_only": 0,
+      "missing_all_meta": 0
+    },
+    "confirmation": {
+      "rows_history_only": 36480,
+      "rows_all_meta": 36480,
+      "matched": 36480,
+      "missing_history_only": 0,
+      "missing_all_meta": 0
+    }
+  }
+}

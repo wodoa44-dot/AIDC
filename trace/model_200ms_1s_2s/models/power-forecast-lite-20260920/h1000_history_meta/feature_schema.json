@@ -1,0 +1,79 @@
+{
+  "encoder": {
+    "batch_median": 32.0,
+    "groups": [
+      "gpu",
+      "workload",
+      "batch",
+      "ai_model"
+    ],
+    "names": [
+      "gpu=B200",
+      "gpu=H100",
+      "gpu=__UNKNOWN__",
+      "workload=image_generation",
+      "workload=llm_training",
+      "workload=__UNKNOWN__",
+      "batch",
+      "batch_missing",
+      "ai_model=1B",
+      "ai_model=3B",
+      "ai_model=8B",
+      "ai_model=diffusion_128",
+      "ai_model=diffusion_256",
+      "ai_model=__UNKNOWN__"
+    ],
+    "vocab": {
+      "ai_model": [
+        "1B",
+        "3B",
+        "8B",
+        "diffusion_128",
+        "diffusion_256"
+      ],
+      "gpu": [
+        "B200",
+        "H100"
+      ],
+      "workload": [
+        "image_generation",
+        "llm_training"
+      ]
+    }
+  },
+  "metadata_features": [
+    "gpu=B200",
+    "gpu=H100",
+    "gpu=__UNKNOWN__",
+    "workload=image_generation",
+    "workload=llm_training",
+    "workload=__UNKNOWN__",
+    "batch",
+    "batch_missing",
+    "ai_model=1B",
+    "ai_model=3B",
+    "ai_model=8B",
+    "ai_model=diffusion_128",
+    "ai_model=diffusion_256",
+    "ai_model=__UNKNOWN__"
+  ],
+  "power_features": [
+    "current",
+    "lag_200ms",
+    "lag_400ms",
+    "lag_800ms",
+    "mean_400ms",
+    "std_400ms",
+    "min_400ms",
+    "max_400ms",
+    "slope_400ms",
+    "mean_1000ms",
+    "std_1000ms",
+    "min_1000ms",
+    "max_1000ms",
+    "slope_1000ms"
+  ],
+  "power_scope": "sum of eight GPUs in one node; CPU excluded",
+  "target": "P_200ms(t + 1000 ms)",
+  "units": "W"
+}

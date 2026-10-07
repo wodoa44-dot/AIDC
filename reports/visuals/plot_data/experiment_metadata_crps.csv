@@ -1,0 +1,5 @@
+horizon_ms,series,crps_w,panel
+1000,전력 이력만,367.5160740214578,metadata_crps
+1000,이력 + 메타데이터,349.51971046510477,metadata_crps
+2000,전력 이력만,521.7505799823076,metadata_crps
+2000,이력 + 메타데이터,473.0625963133152,metadata_crps

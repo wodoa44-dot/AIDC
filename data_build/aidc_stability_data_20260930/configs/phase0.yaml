@@ -1,0 +1,13 @@
+live_enabled: false
+gpu_uuid: null
+experiment_authorized: false
+workload_command: null
+poll_interval_ms: 20
+poll_interval_candidates_ms: [10, 20, 50, 100]
+max_duration_s: 60
+max_temperature_c: 85
+cap_fraction_candidates: [0.6, 0.7, 0.8, 0.9, 1.0]
+mode: passive
+gpu_free_verified: false
+allowed_cap_range_mw: null
+requested_cap_mw: null

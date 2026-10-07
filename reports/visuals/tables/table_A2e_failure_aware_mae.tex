@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{Full original/failure-aware results — run-macro MAE (W).}
+\label{tab:a2e_failure_aware_mae}
+\small
+\begin{tabular}{lllllll}
+\toprule
+Protocol & Resolution (ms) & Horizon (ms) & Original MAE (W) & Mean-CRPS selection MAE (W) & Failure-aware MAE (W) & Persistence MAE (W) \\
+\midrule
+grouped\_outer & 200 & 1000 & \underline{458.90} & \textbf{411.78} & \textbf{411.78} & 578.57 \\
+grouped\_outer & 200 & 2000 & 650.94 & \underline{588.92} & \textbf{579.85} & 934.88 \\
+reused\_holdout & 200 & 1000 & \underline{308.40} & \textbf{287.55} & \textbf{287.55} & 542.03 \\
+reused\_holdout & 200 & 2000 & 568.21 & \underline{461.32} & \textbf{460.12} & 844.90 \\
+grouped\_outer & Avg & Avg & 554.92 & \underline{500.35} & \textbf{495.82} & 756.72 \\
+reused\_holdout & Avg & Avg & 438.30 & \underline{374.43} & \textbf{373.84} & 693.46 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\par\footnotesize Seed 42, history+metadata, full 15 quantiles, run-balanced. Avg는 각 protocol의 1 s와 2 s 평균이다. Persistence에는 probabilistic CRPS가 없어 —로 표시한다.
+\end{table*}

@@ -1,0 +1,4 @@
+# Commands executed from /home/work/AIDC
+pytest -q trace/model_200ms_1s_2s/validation/tests
+python trace/model_200ms_1s_2s/validation/validate.py --smoke --output trace/model_200ms_1s_2s/validation/audit_20260921_smoke_v2
+python trace/model_200ms_1s_2s/validation/validate.py --output trace/model_200ms_1s_2s/validation/audit_20260921_full_v3

@@ -1,0 +1,11 @@
+{
+  "outer_fold_test_development_overlap": false,
+  "reserved_in_outer_assignments": 0,
+  "reserved_used_in_main_predictions": 0,
+  "smoke_reservation_exposure": "smoke code constructs reservation but executes all 32 raw traces; however its evaluation excludes reserved runs in both protocols. No direct saved smoke predictions inspected here.",
+  "inner_validation_grouped": false,
+  "inner_validation_evidence": "expanded.py grouped_outer uses meta.split==1 from non-test runs, not held-out inner run groups",
+  "track_A_shared_settings": true,
+  "track_B_independent_candidate_search": true,
+  "track_B_candidate_budget_note": "candidate list has 4 candidates but every candidate hard-codes n_estimators=12, despite YAML n_estimators=4"
+}

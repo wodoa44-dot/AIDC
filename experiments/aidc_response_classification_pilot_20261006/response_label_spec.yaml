@@ -1,0 +1,92 @@
+schema_version: 1
+research_name: 고정된 PCC proxy 요구조건에 대한 대응 수준 예측
+status: blocked_missing_required_configuration
+scenario_id: fixed_proxy_v1
+classes:
+  R0: 추가 대응 없이 요구조건 충족
+  R1: 기본 대응 자원으로 충족
+  R2: 기본 대응은 부족하나 확대 대응으로 충족
+  R3: 확대 대응의 infeasibility가 확인됨
+  U: 설정 부족·자료 부족·수치 문제·계산 실패로 판정 불가; 학습 제외
+interpretation: 미래 실제값을 사용하는 oracle이며 causal controller 성능 또는 실제 계통 안정성 입증이 아님
+assessment:
+  measured_quantity: eight_GPU_sum_power
+  measured_unit: W
+  measured_source: experiments/aidc_grid_metadata_20260929/src/aidc_exp/preprocessing.py:load_highres
+  facility_scaling: null
+  concurrency_assumption: null
+  cpu_cooling_other_included: false
+  proxy_mapping: null
+  mapping_note: 시설 PCC 실측 없음; GPU 합산 전력을 그대로 proxy로 쓰려면 명시적으로 확정해야 함
+requirements:
+  kind: discrete_PCC_proxy_ramp
+  ramp_up_w_s: null
+  ramp_down_w_s: null
+  source: null
+  source_location: null
+  category: 미확정
+  evaluation_window_s: 1.0
+  recovery_s: null
+  recovery_ramp_enforced: null
+  pcc_min_w: null
+  pcc_max_w: null
+  envelope_required: null
+  tolerance_w: null
+  tolerance_j: null
+  tolerance_fraction: null
+  boundary_rule: inclusive_limit_plus_explicit_tolerance
+resources:
+  U0: []
+  U1: null
+  U2_additional: null
+  expansion_cost_or_workload_constraints: null
+  modeling_scope: storage_only_MILP; 추가 workload 동작은 별도 검증 구현이 필요
+  device_schema:
+    id: unique_string
+    charge_w: null
+    discharge_w: null
+    capacity_j: null
+    initial_soc: null
+    soc_min: null
+    soc_max: null
+    eta_charge: null
+    eta_discharge: null
+    delay_bins: null
+    slew_w_s: null
+    throughput_budget_j: null
+    terminal_soc_tolerance: null
+    terminal_net_power_w: 0
+    initial_net_power_w: 0
+    source: null
+    source_location: null
+    category: 미확정
+scenario:
+  grid_conditions: null
+  initial_pcc_rule: null
+  initial_states: fixed_device_initial_soc_and_zero_output
+  future_bins: 5
+  dt_s: 0.2
+  recovery_future_policy: observed_bins_only_no_imputation
+  hidden_state_variation: forbidden
+solver:
+  method: scipy.optimize.milp_HiGHS
+  time_limit_s: 10
+  mip_rel_gap: 0.0
+  feasibility_tolerance_note: scipy milp는 별도 primal tolerance API를 노출하지 않음; 물리 단위별 독립 재계산 필요
+  infeasibility_evidence: status_2_only; numerical_failures_and_timeouts_are_U
+provenance:
+  required_values: 값·단위·출처·정확한 위치·문헌/실측/제조사 사양/기존 실험 가정/미확정·적용 한계는 source_evidence.csv에 기록
+  inherited_values_not_adopted:
+    ramp_threshold_w_s: 500
+    capacity_train_p95_fraction: 0.3
+    fast_capacity_hours: 0.02
+    ess_capacity_hours: 2
+    initial_soc: 0.5
+    soc_min: 0.2
+    soc_max: 0.8
+    eta: 0.95
+    delay_bins: 1
+    recovery_s: 20
+    source: experiments/aidc_control_fair_budget_20260930/nested/config.yaml:17-28,16
+    category: 기존 실험 가정
+    limitation: U1/U2와 동일 종료·복구 조건이 정의되지 않아 이번 label에는 채택하지 않음

@@ -1,0 +1,277 @@
+"""Extension of the preserved fair-budget implementation, with nested group partitions."""
+import argparse
+import fcntl
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import sys
+import time
+import traceback
+import numpy as np
+import pandas as pd
+import yaml
+
+ROOT=Path(__file__).resolve().parent
+BASE=ROOT.parent
+sys.path.append(str(BASE))
+sys.path.append(str(BASE.parent/'aidc_grid_metadata_20260929'/'src'))
+spec=importlib.util.spec_from_file_location('fixed_base',BASE/'pipeline.py')
+base=importlib.util.module_from_spec(spec); spec.loader.exec_module(base)
+from control import simulate,metrics,validate
+from aidc_exp.training import encode,fit_quantile
+from aidc_exp.splits import sample_training
+from grouping import verify_groups,DATA
+atomic_json=base.atomic_json
+config_hash=base.config_hash
+sha=base.sha
+
+
+def frame_hash(d):
+    return hashlib.sha256(pd.util.hash_pandas_object(d,index=True).values.tobytes()).hexdigest()
+
+
+def cached_json(path,identity,compute):
+    if path.exists():
+        x=json.loads(path.read_text()); assert x['identity']==identity,('cache identity mismatch',str(path)); return x['result']
+    result=compute(); atomic_json(path,{'identity':identity,'result':result}); return result
+
+
+def predict(cfg,tr,va,path,excluded,log,smoke):
+    """Same LightGBM quantile family/features/loss/rearrangement as existing predictor."""
+    path.mkdir(parents=True,exist_ok=True)
+    assert not set(tr.group_id)&set(va.group_id)
+    assert not set(tr.group_id)&set(excluded) and not set(va.group_id)&set(excluded)
+    limit=cfg['smoke_max_train_per_run'] if smoke else cfg['max_train_per_run']
+    train=sample_training(tr,max_per_run=limit,seed=2026)
+    hp=cfg['predictor']; h=cfg['horizon_bins']; y=f'y_{h}'
+    identity={'train_runs':sorted(set(train.run_id)),'validation_runs':sorted(set(va.run_id)),
+              'train_groups':sorted(set(train.group_id)),'validation_groups':sorted(set(va.group_id)),
+              'excluded_outer_groups':list(excluded),'hyperparameters':hp,'quantiles':cfg['quantiles'],
+              'seed':cfg['seed'],'training_data_hash':frame_hash(train),'validation_data_hash':frame_hash(va)}
+    provenance=path/'provenance.json'; target=path/'predictions.parquet'; complete=path/'complete.json'
+    if provenance.exists(): assert json.loads(provenance.read_text())==identity
+    else: atomic_json(provenance,identity)
+    if complete.exists():
+        assert json.loads(complete.read_text())['prediction_hash']==sha(target)
+        log('predictor_cache_reused',path=str(path)); return pd.read_parquet(target)
+    train[['run_id','group_id','segment','bin','sample_weight']].to_parquet(path/'training_sample.parquet',index=False)
+    va[['run_id','group_id','segment','bin']].to_parquet(path/'validation_sample.parquet',index=False)
+    output=va[['run_id','group_id','segment','bin','issuance_s','current_w',y]].rename(columns={y:'actual_w'}).copy()
+    output['availability_s']=output.issuance_s
+    output['target_time_s']=output.issuance_s+cfg['dt']*h
+    output['target_start_s']=output.target_time_s-cfg['dt']
+    model_checks=[]
+    import lightgbm as lgb
+    for model in ('P2','P4'):
+        x,xv=encode(train,va,model,hp['history_s'])
+        assert not any(c.startswith('y_') for c in x.columns)
+        atomic_json(path/f'{model}_feature_schema.json',{'columns':list(x.columns),'encoding':'existing encode: categories learned on sampled training only; unseen=-1; numeric NaN native LightGBM',
+                     'training_feature_hash':frame_hash(x),'validation_feature_hash':frame_hash(xv)})
+        predictions=[]
+        for q in cfg['quantiles']:
+            model_path=path/f'{model}_q{q:g}.txt'; done=path/f'{model}_q{q:g}.json'
+            if done.exists():
+                assert json.loads(done.read_text())['sha256']==sha(model_path)
+                fitted=lgb.Booster(model_file=str(model_path))
+                pred=fitted.predict(xv)
+            else:
+                fitted=fit_quantile(x,train[y],train.sample_weight,q,hp,cfg['seed'])
+                pred=fitted.predict(xv)
+                tmp=model_path.with_suffix('.tmp'); fitted.booster_.save_model(str(tmp)); tmp.replace(model_path)
+                atomic_json(done,{'sha256':sha(model_path)})
+            model_checks.append({'path':str(model_path),'sha256':sha(model_path)})
+            predictions.append(pred)
+            log('predictor_quantile',partition=str(path.name),model=model,quantile=q,train_rows=len(train),validation_rows=len(va))
+        sorted_q=np.sort(np.column_stack(predictions),axis=1)
+        output[model]=sorted_q[:,cfg['quantiles'].index(.5)]
+    assert np.isfinite(output[['current_w','actual_w','P2','P4']]).all().all()
+    assert not output.duplicated(['run_id','segment','bin']).any()
+    assert np.allclose(output.target_time_s-output.issuance_s,h*cfg['dt'])
+    base.save_parquet(target,output)
+    atomic_json(complete,{'prediction_hash':sha(target),'models':model_checks})
+    return output
+
+
+def calibration(cfg,tr,path,log):
+    path.mkdir(parents=True,exist_ok=True)
+    split=[{'fold':0,'train_runs':sorted(set(tr.run_id))}]
+    def progress(stage,status,**kw): log('calibration',partition=str(path),status=status,**kw)
+    result=base.calibrate(cfg,path,split,tr,progress)
+    return result['0']
+
+
+def run_windows(cfg,pred,setting,mode,budget,smoke=False,keep=False):
+    ws=list(base.windows(pred,cfg))
+    if smoke: ws=ws[:cfg['smoke_windows_per_inner_fold']]
+    assert ws,'No complete windows in partition'
+    byrun={}; traces=[]; allmetrics=[]
+    for run,segment,window,g in ws:
+        demand=g.current_w.to_numpy(); forecast=g[{'C2':'current_w','C3':'P2','C4':'P4'}[mode]].to_numpy()
+        z=simulate(demand,forecast,mode,cfg,setting['device'],setting['rates_w'],budget)
+        m=metrics(z,cfg,setting['device']); validate(m)
+        assert abs(z.fast_w.iloc[-1])+abs(z.ess_w.iloc[-1])<1e-6
+        ids={'run_id':run,'group_id':g.group_id.iloc[0],'segment':int(segment),'window':window,'controller':mode,'budget':budget}
+        m.update(ids); allmetrics.append(m)
+        byrun.setdefault(run,{'group_id':g.group_id.iloc[0],'ramp':[],'metrics':[]})
+        byrun[run]['ramp'].append(np.diff(z.pcc_w)/cfg['dt']); byrun[run]['metrics'].append(m)
+        if keep:
+            for k,v in ids.items(): z[k]=v
+            for col in ('issuance_s','P2','P4'): z[col]=g[col].to_numpy()
+            z['actual_future_w']=g.actual_w.to_numpy(); traces.append(z)
+    rows=[]
+    for run,x in byrun.items():
+        a=abs(np.concatenate(x['ramp'])); mm=pd.DataFrame(x['metrics'])
+        rows.append({'run_id':run,'group_id':x['group_id'],'p95_ramp':float(np.quantile(a,.95)),'max_ramp':float(a.max()),
+                     'fast_throughput_wh':float(mm.fast_throughput_wh.sum()),'ess_throughput_wh':float(mm.ess_throughput_wh.sum()),
+                     'n_windows':len(mm),'duration_s':float(mm.duration_s.sum())})
+    return rows,allmetrics,traces
+
+
+def choose(cfg,fold,inner,out,log,smoke):
+    folder=out/'tuning'/f'outer{fold}'; folder.mkdir(parents=True,exist_ok=True)
+    summaries=[]; selected={}
+    for budget in cfg['budget_multipliers']:
+        selected[f'{budget:g}']={}
+        for mode in cfg['controllers']:
+            choices=[]
+            for ci,candidate in enumerate(cfg['controller_candidates']):
+                rows=[]; tuned={**cfg,**candidate}
+                for idx,(pred,setting) in enumerate(inner):
+                    task=folder/f'i{idx}_{mode}_b{budget:g}_c{ci}.json'
+                    identity={'candidate':candidate,'controller':mode,'budget':budget,'prediction_hash':frame_hash(pred),'calibration':setting,'smoke':smoke}
+                    values=cached_json(task,identity,lambda:run_windows(tuned,pred,setting,mode,budget,smoke)[0])
+                    rows.extend(values)
+                    log('controller_candidate',outer=fold,inner=idx,controller=mode,budget=budget,candidate=ci)
+                d=pd.DataFrame(rows); assert not d.run_id.duplicated().any()
+                score=(float(d.p95_ramp.mean()),float(d.max_ramp.mean()),float((d.fast_throughput_wh+d.ess_throughput_wh).mean()),ci)
+                rec={'outer_fold':fold,'budget':budget,'controller':mode,'candidate':ci,**candidate,
+                     'validation_run_balanced_p95':score[0],'validation_run_balanced_max_ramp':score[1],
+                     'validation_run_balanced_throughput':score[2],'validation_runs':len(d),'validation_groups':d.group_id.nunique(),'all_constraints_passed':True}
+                summaries.append(rec); choices.append((score,ci))
+            ci=min(choices)[1]; selected[f'{budget:g}'][mode]={'candidate':ci,'parameters':cfg['controller_candidates'][ci]}
+    pd.DataFrame(summaries).to_csv(folder/'validation_scores.csv',index=False)
+    # Commit selection before generating/reading outer-test predictions.
+    atomic_json(folder/'selected.json',{'selected':selected,'selection_rule':'feasible -> run-balanced pooled-window p95 -> mean max ramp -> mean total throughput -> candidate index',
+                  'test_used':False,'candidate_count_each_controller':len(cfg['controller_candidates'])})
+    return selected
+
+
+def evaluate(cfg,fold,pred,setting,selection,out,log,smoke):
+    ws=list(base.windows(pred,cfg)); available=pd.DataFrame([{'run_id':r,'bins':len(g)} for r,_,_,g in ws]).groupby('run_id').bins.sum().to_dict()
+    ex=[]
+    for run,g in pred.groupby('run_id'):
+        ex.append({'fold':fold,'run_id':run,'prediction_bins':len(g),'evaluated_complete_window_bins':available.get(run,0),'excluded_bins':len(g)-available.get(run,0),'reason':'incomplete 60s window; smoke may further subset'})
+    pd.DataFrame(ex).to_csv(out/f'exclusions_f{fold}.csv',index=False)
+    for policy in ('fixed_policy','inner_tuned'):
+        taskdir=out/policy/'checkpoints'; taskdir.mkdir(parents=True,exist_ok=True)
+        for budget in cfg['budget_multipliers']:
+            for mode in cfg['controllers']:
+                parameters={} if policy=='fixed_policy' else selection[f'{budget:g}'][mode]['parameters']
+                tuned={**cfg,**parameters}
+                for run,g in pred.groupby('run_id'):
+                    if run not in available: continue
+                    tag=f'{run}_{mode}_b{budget:g}'; cp=taskdir/f'{tag}.json'; csv=taskdir/f'{tag}.csv'; parquet=taskdir/f'{tag}.parquet'
+                    identity={'prediction':frame_hash(g),'settings':setting,'parameters':parameters,'mode':mode,'budget':budget,'smoke':smoke}
+                    if cp.exists():
+                        x=json.loads(cp.read_text()); assert x['identity']==identity and x['trace_hash']==sha(parquet) and x['metrics_hash']==sha(csv); continue
+                    _,measures,traces=run_windows(tuned,g,setting,mode,budget,smoke,True)
+                    m=pd.DataFrame(measures); m['fold']=fold; m.to_csv(csv,index=False)
+                    z=pd.concat(traces,ignore_index=True);z['fold']=fold;base.save_parquet(parquet,z)
+                    atomic_json(cp,{'identity':identity,'trace_hash':sha(parquet),'metrics_hash':sha(csv)})
+                    log('outer_evaluation',fold=fold,policy=policy,controller=mode,budget=budget,run_id=run)
+
+
+def make_splits(data):
+    groups=sorted(data.group_id.unique()); splits=[]
+    for fold,test in enumerate(groups):
+        train=[x for x in groups if x!=test]
+        inner=[{'inner_fold':i,'train_groups':[x for x in train if x!=val],'validation_groups':[val]} for i,val in enumerate(train)]
+        splits.append({'fold':fold,'train_groups':train,'test_groups':[test],
+                       'train_runs':sorted(data.loc[data.group_id.isin(train),'run_id'].unique()),
+                       'test_runs':sorted(data.loc[data.group_id.eq(test),'run_id'].unique()),'inner':inner})
+    return splits
+
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--config',type=Path,required=True);ap.add_argument('--output-dir',type=Path,required=True)
+    ap.add_argument('--resume',action='store_true');ap.add_argument('--smoke',action='store_true');args=ap.parse_args()
+    cfg=yaml.safe_load(args.config.read_text());out=args.output_dir.resolve();out.mkdir(parents=True,exist_ok=True)
+    digest=config_hash({**cfg,'smoke':args.smoke});ld=ROOT/'outputs'/'.locks';ld.mkdir(parents=True,exist_ok=True)
+    lock=open(ld/f'{digest}.lock','a+')
+    try: fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError: print('Same config running',flush=True);return 75
+    stages={k:'pending' for k in ('inner_oof_predictions','controller_grouped_tuning','collection_group_verification','outer_evaluation','independent_group_statistics','visualization','report')}
+    start=time.time();code=1;error=None
+    def state(status):
+        atomic_json(out/'completion_status.json',{'status':status,'all_completed':all(v=='completed' for v in stages.values()),'smoke':args.smoke,'stages':stages,'exit_code':None if status=='running' else code,'failure':error,'pid':os.getpid(),'elapsed_s':time.time()-start})
+    def log(event,**kw):
+        info={'status':'running','event':event,'pid':os.getpid(),'utc':pd.Timestamp.now(tz='UTC').isoformat(),'elapsed_s':time.time()-start,**kw}
+        print(json.dumps(info,ensure_ascii=False),flush=True);atomic_json(out/'progress.json',info);state('running')
+    def stop(s,f): raise SystemExit(128+s)
+    signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
+    try:
+        log('identity_check')
+        src=Path(cfg['source']); fixed=Path(cfg['fixed_policy_dir'])
+        assert json.loads((src/'candidate_manifest.json').read_text())['candidates'][0]==cfg['predictor'],'Predictor must remain original literal default candidate'
+        inv=pd.read_csv(src/'inventory.csv');raw=sorted(set(inv.loc[inv.dataset.eq('highres_node'),'source_path']))
+        paths=[src/x for x in ['prepared.parquet','inventory.csv','split_manifest.json','config_snapshot.yaml','candidate_manifest.json']]
+        paths += [fixed/x for x in ['provenance.json','per_run_metrics.csv','budget_summary.csv','completion_status.json']]+[DATA/'README.md']
+        paths += list((BASE.parent/'aidc_grid_metadata_20260929'/'src'/'aidc_exp').glob('*.py'))
+        paths += list(BASE.glob('*.py'))+list(ROOT.glob('*.py'))+list(ROOT.glob('*.sh'))
+        identity={'config_hash':digest,'files':{str(p):sha(p) for p in paths},'raw':{p:sha(p) for p in raw}}
+        if (out/'provenance.json').exists():
+            assert args.resume,'Existing output requires --resume'
+            assert json.loads((out/'provenance.json').read_text())==identity,'Config/code/input/model identity changed; new output required'
+        else: atomic_json(out/'provenance.json',identity)
+        (out/'resolved_config.yaml').write_text(yaml.safe_dump({**cfg,'smoke':args.smoke},sort_keys=False))
+        group=verify_groups(cfg,out,sha)
+        stages['collection_group_verification']='blocked_independence_evidence'
+        stages['independent_group_statistics']='blocked_independence_evidence'
+        log('collection_evidence_audited',assumed_groups=group.assumed_group_id.nunique(),verified_independent_groups=0)
+        data=pd.read_parquet(src/'prepared.parquet');data['group_id']=data.run_id.map(group.set_index('run_id').assumed_group_id)
+        assert data.group_id.notna().all()
+        data=data[data.eligible_history & data[f'y_{cfg["horizon_bins"]}'].notna()].copy()
+        splits=make_splits(data)
+        atomic_json(out/'split_manifest.json',{'rule':'leave recorded calendar day out, conservative assumption; no formal independence claim','folds':splits})
+        # Saved legacy outer forecasts use test-day peers and selected HPs. They cannot be inner OOF or corrected-day test forecasts.
+        atomic_json(out/'reuse_audit.json',{'reused':['control.py physics, budgets, recovery and checks','pipeline.py windows/calibration','analysis.py aggregate_results','frozen prepared features/targets and raw inventory','legacy fixed-policy outputs read-only'],
+            'not_reused_as_nested_oof':'Legacy prediction_parts only predict outer-run tests; their training includes same-day peers. Legacy selected HPs used current inner validation labels. No compatible nested prediction/model provenance found.',
+            'predictor_setting':'Original candidate[0] literal baseline, fixed before this tuning; no HP search, new feature, architecture, target or loss. All 15 original quantile levels trained and sorted before q0.5 extraction.',
+            'retraining_scope':'P2/P4 for 4 corrected outer partitions and 12 inner partitions; same model family/feature definitions. Only seed17 horizon1s. Outer regeneration required by day-group split change.'})
+        for s in (splits[:cfg['smoke_outer_folds']] if args.smoke else splits):
+            fold=s['fold'];tr=data[data.group_id.isin(s['train_groups'])];te=data[data.group_id.isin(s['test_groups'])]
+            assert not set(tr.group_id)&set(te.group_id)
+            inner=[];stages['inner_oof_predictions']='running'
+            for ins in s['inner']:
+                it=tr[tr.group_id.isin(ins['train_groups'])];iv=tr[tr.group_id.isin(ins['validation_groups'])]
+                assert not set(it.group_id)&set(iv.group_id) and not set(it.group_id)&set(te.group_id)
+                pp=out/'predictor_cache'/f'outer{fold}'/f'inner{ins["inner_fold"]}'
+                pred=predict(cfg,it,iv,pp,s['test_groups'],log,args.smoke)
+                cal=calibration(cfg,it,out/'calibration'/f'o{fold}_i{ins["inner_fold"]}',log)
+                inner.append((pred,cal))
+            stages['controller_grouped_tuning']='running'
+            selected=choose(cfg,fold,inner,out,log,args.smoke)
+            log('selection_frozen_before_outer_prediction',outer=fold,selection_hash=sha(out/'tuning'/f'outer{fold}'/'selected.json'))
+            pred=predict(cfg,tr,te,out/'predictor_cache'/f'outer{fold}'/'outer_test',[],log,args.smoke)
+            cal=calibration(cfg,tr,out/'calibration'/f'o{fold}_outer',log)
+            stages['outer_evaluation']='running';evaluate(cfg,fold,pred,cal,selected,out,log,args.smoke)
+        for key in ('inner_oof_predictions','controller_grouped_tuning','outer_evaluation'): stages[key]='completed_smoke' if args.smoke else 'completed'
+        from nested_report import build_results,plots_and_report
+        build_results(cfg,out,group,log)
+        stages['visualization']='running';plots_and_report(cfg,out,group,args.smoke)
+        stages['visualization']='completed';stages['report']='completed';code=0
+    except BaseException as e:
+        error=str(e);code=e.code if isinstance(e,SystemExit) and isinstance(e.code,int) else 1
+        for key in stages:
+            if stages[key]=='running': stages[key]='failed_or_interrupted'
+        traceback.print_exc()
+    finally:
+        final='completed_with_blocked_scope' if code==0 else ('interrupted' if code in (130,143) else 'failed')
+        state(final);atomic_json(out/'progress.json',{'status':final,'stages':stages,'pid':os.getpid(),'exit_code':code,'elapsed_s':time.time()-start})
+        (out/'exit_code.txt').write_text(str(code)+'\n')
+    return code
+
+if __name__=='__main__': sys.exit(main())
